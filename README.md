@@ -1,6 +1,4 @@
-# Trabalho de implementação — segundo período
-
-**Apresentação:** 16/11/2026
+# Trabalho de implementação — Segundo período
 
 Neste trabalho, fizemos nove algoritmos de ordenação em Python. Cada um organiza uma lista de números de um jeito diferente.
 
