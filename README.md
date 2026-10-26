@@ -1,4 +1,4 @@
-# Trabalho de implementação — Segundo período
+## Trabalho de implementação — Segundo período
 
 Neste trabalho, fizemos nove algoritmos de ordenação em Python. Cada um organiza uma lista de números de um jeito diferente.
 
