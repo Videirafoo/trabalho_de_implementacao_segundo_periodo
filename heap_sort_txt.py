@@ -1,6 +1,7 @@
 import os
 import random
 import time
+import tempfile
 
 # Vantagem: tem bom desempenho em listas grandes.
 # Desvantagem: é mais difícil de entender.
@@ -71,25 +72,32 @@ def ler_arquivo(caminho):
 
 
 def salvar_arquivo(caminho, numeros):
-    modo = "x"
     if os.path.exists(caminho):
         try:
             resposta = input("O arquivo de saida ja existe. Deseja substituir? (s/n): ").strip().lower()
-        except EOFError:
+        except (EOFError, KeyboardInterrupt):
             print("Sem confirmacao. O arquivo existente foi preservado.")
             return False
         if resposta != "s":
             print("Operacao cancelada. O arquivo existente foi preservado.")
             return False
-        modo = "w"
 
+    temporario = None
     try:
-        with open(caminho, modo, encoding="utf-8") as arquivo:
+        with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8",
+                                         dir=os.path.dirname(caminho),
+                                         suffix=".tmp", delete=False) as arquivo:
+            temporario = arquivo.name
             for numero in numeros:
                 arquivo.write(str(numero) + "\n")
+        os.replace(temporario, caminho)
     except OSError as erro:
         print("Erro ao salvar arquivo ordenado:", erro)
         return False
+    finally:
+        if temporario is not None and os.path.exists(temporario):
+            os.remove(temporario)
+
     print("Arquivo de saida salvo com 100.000 numeros ordenados.")
     return True
 
